@@ -1,0 +1,6 @@
+[mysql]
+user = admin
+pwd = admin
+dbname = community_dbm
+host = 127.0.0.1
+dictrows = False

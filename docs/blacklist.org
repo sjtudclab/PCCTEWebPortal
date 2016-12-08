@@ -1,0 +1,9 @@
+about
+account
+admin
+api
+help
+login
+logout
+signup
+status
