@@ -20,6 +20,13 @@
         $('#btn_personnel_list').click(function(){
             window.location.href = "/admin/personnel/list"
         })
+
+        $('#btn_tests_upload').click(function(){
+            window.location.href = "/test/upload"
+        })
+        $('#btn_tests_list').click(function(){
+            window.location.href = "/test/list"
+        })
     })
 </script>
 {% endblock %}
@@ -55,7 +62,15 @@
     </div>
 </div>
 
-<h2 class="sub-header">Section title</h2>
+<h2 class="sub-header">测试模块</h2>
+<div class="row placeholders">
+    <div class="col-xs-6 col-sm-3 placeholder">
+        <button class="btn btn-lg btn-primary btn-block" id="btn_tests_upload">添加测试</button>
+    </div>
+    <div class="col-xs-6 col-sm-3 placeholder">
+        <button class="btn btn-lg btn-primary btn-block" id="btn_tests_list">测试列表</button>
+    </div>
+</div>
 {% endblock content_container %}
 
 <!-- FOOTER -->

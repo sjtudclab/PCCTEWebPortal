@@ -45,7 +45,7 @@ def excep_handler(fn):
 app.install(excep_handler)
 
 
-@app.hook('before_request')
+# @app.hook('before_request')
 def setup_request():
     try:
         bottle.request.session = bottle.request.environ['beaker.session']
@@ -94,9 +94,19 @@ def server_file(filepath):
 #
 # Output : login page
 @app.get('/')
-@app.get('/admin/login')
+# @app.get('/admin/login')
 def admin_login():
-    return bottle.jinja2_template('template/login.html')
+    return bottle.jinja2_template('template/index.html')
+
+
+@app.get('/test/upload')
+def test_upload():
+    return bottle.jinja2_template('template/test_upload.html')
+
+
+@app.get('/test/list')
+def test_upload():
+    return bottle.jinja2_template('template/test_list.html')
 
 
 # Description : login process.

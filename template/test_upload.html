@@ -1,0 +1,45 @@
+{% extends "template/base.html" %}
+
+<!-- HEAD**************************************** -->
+<!-- TITLE-->
+{% block title %}添加测试{% endblock %}
+
+<!-- EXTRAHEAD-->
+
+<!-- BODY**************************************** -->
+<!-- NAVIGATION -->
+
+<!-- CONTENT -->
+    <!--SIDE_BAR-->
+
+    <!--CONTENT_CONTAINER-->
+{% block content_container %}
+<div class="container">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-4">
+        <form action="/admin/signup" method="post"  enctype="multipart/form-data">
+            <h2>添加测试</h2>
+            <div class="form-group">
+                <label class="sr-only" for="inputUsername">Username</label>
+                <input class="form-control" id="inputUsername" name="username" type="text" placeholder="测试名" required autofocus>
+            </div>
+            <div id="divAdvancedOptions">
+                <div class="form-group">
+                    <p class="help-block">请上传项目文件</p>
+                    <label class="sr-only" for="inputImageFile">Choose file</label>
+                    <input id="inputImageFile" type="file"  name="upload">
+                </div>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+</div> <!-- /container -->
+{% endblock content_container %}
+
+<!-- FOOTER -->
+
+<!-- EXTRA_STYLE -->
