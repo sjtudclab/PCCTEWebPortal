@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import traceback
 import logging
 import bottle
@@ -5,6 +6,8 @@ import bottle_mysql
 import models
 import dbm
 import time
+import json
+import os
 from beaker.middleware import SessionMiddleware
 
 logging.basicConfig(filename='smartycity-DBM.log', level=logging.DEBUG)
@@ -105,9 +108,18 @@ def test_upload():
 
 
 @app.get('/test/list')
-def test_upload():
+@app.post('/test/list')
+def test_list():
     return bottle.jinja2_template('template/test_list.html')
 
+@app.get('/test/submit/<name>')
+def test_submit(name):
+    os.system('cd /tmp/underTest')
+    os.system('git init')
+    os.system('git add .')
+    os.system('git commit -m "1" ')
+    os.system('git push -f origin master:'+name)
+    return name
 
 # Description : login process.
 #
@@ -141,15 +153,15 @@ def admin_index(**dict):
     return bottle.jinja2_template('template/index.html', dict)
 
 
-@app.get('/admin/signup')
-def admin_signup():
-    return bottle.jinja2_template('template/signup.html')
+# @app.get('/admin/signup')
+# def admin_signup():
+#     return bottle.jinja2_template('template/signup.html')
 
 
-@app.post('/admin/signup')
-def admin_signup_process(db):
-    add_user(db)
-    return bottle.jinja2_template('template/login.html')
+# @app.post('/admin/signup')
+# def admin_signup_process(db):
+#     add_user(db)
+#     return bottle.jinja2_template('template/login.html')
 
 
 @app.get('/admin/user')

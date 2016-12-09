@@ -5,7 +5,21 @@
 {% block title %}添加测试{% endblock %}
 
 <!-- EXTRAHEAD-->
-
+{% block extrahead %}
+<script>
+function submitFiles() {
+var name=$('#inputUsername').val();
+$.ajax({
+  url: "/test/submit/"+name,
+  cache: false,
+  type:"GET",
+  success: function(re){
+    window.location.href= '/test/list' +'?name=' + name
+  }
+});
+}
+</script>
+{% endblock %}
 <!-- BODY**************************************** -->
 <!-- NAVIGATION -->
 
@@ -18,7 +32,7 @@
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-4">
-        <form action="/admin/signup" method="post"  enctype="multipart/form-data">
+        <form id='formUpload' onsubmit='submitFiles();return false;' action="/test/submit" method="post"  enctype="multipart/form-data">
             <h2>添加测试</h2>
             <div class="form-group">
                 <label class="sr-only" for="inputUsername">Username</label>
@@ -28,11 +42,11 @@
                 <div class="form-group">
                     <p class="help-block">请上传项目文件</p>
                     <label class="sr-only" for="inputImageFile">Choose file</label>
-                    <input id="inputImageFile" type="file"  name="upload">
+		    <input type="file" webkitdirectory directory multiple/>
                 </div>
             </div>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" id='submitCT'>提交</button>
         </form>
     </div>
     <div class="col-md-4"></div>

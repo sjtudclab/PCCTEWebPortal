@@ -1,0 +1,8 @@
+{
+"name":"TI1",
+"lang":"c",
+"OS":"POSIX",
+"tool": "gcc",
+"segment": ["IOSS"],
+"APIs": ["FACE_IO_Initialize","FACE_IO_Open","FACE_IO_Register","FACE_IO_Unregister","FACE_IO_Read","FACE_IO_Write","FACE_IO_Get_Status","FACE_IO_Close"]
+}
