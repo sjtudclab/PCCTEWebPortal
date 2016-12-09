@@ -25,6 +25,12 @@ $(function(){
 var name = getUrlParameter('name');
 
 $('#myTable').append('<tr><td>#</td><td>' + new Date($.now()) + '</td><td>' + name + '</td><td></td><td>正在测试</td></tr>' );
+
+setTimeout(function(){
+$('td:eq(4)').text('测试通过');
+}
+, 3000);
+
 });
 
 

@@ -114,11 +114,12 @@ def test_list():
 
 @app.get('/test/submit/<name>')
 def test_submit(name):
-    os.system('cd /tmp/underTest')
+    os.chdir('/tmp/underTest')
     os.system('git init')
     os.system('git add .')
     os.system('git commit -m "1" ')
     os.system('git push -f origin master:'+name)
+    os.chdir('/home/hadoop/Work/PCCTEWebPortal')
     return name
 
 # Description : login process.
