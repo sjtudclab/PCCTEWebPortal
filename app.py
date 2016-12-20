@@ -99,7 +99,7 @@ def server_file(filepath):
 @app.get('/')
 # @app.get('/admin/login')
 def admin_login():
-    return bottle.jinja2_template('template/index.html')
+    return bottle.jinja2_template('template/test_upload.html')
 
 
 @app.get('/test/upload')
@@ -152,18 +152,6 @@ def admin_login_process(db):
 @app.get('/admin/index')
 def admin_index(**dict):
     return bottle.jinja2_template('template/index.html', dict)
-
-
-# @app.get('/admin/signup')
-# def admin_signup():
-#     return bottle.jinja2_template('template/signup.html')
-
-
-# @app.post('/admin/signup')
-# def admin_signup_process(db):
-#     add_user(db)
-#     return bottle.jinja2_template('template/login.html')
-
 
 @app.get('/admin/user')
 @app.get('/admin/user/list')
@@ -250,140 +238,6 @@ def admin_user_detail(userid, db):
                                   ,user_resident_info=user_resident_info)
 
 
-@app.get('/admin/apartment')
-@app.get('/admin/apartment/list')
-def admin_apartment_list():
-    return bottle.jinja2_template('template/apartment_list.html',
-                                  apartments=[models.Apartment(101, '1号', 'Building 101 description', 101, '201', 60, 'Eugene', '310110196004020311'),
-                                              models.Apartment(102, '2号', 'Building 102 description', 102, '202', 80, 'Ernest', '310110196004020312'),
-                                              models.Apartment(103, '3号', 'Building 103 description', 103, '203', 90, 'Young', '310110196004020313')])
-
-
-@app.get('/admin/personnel')
-@app.get('/admin/personnel/list')
-def admin_personnel_list():
-    return bottle.jinja2_template('template/personnel_list.html',
-                                  personnels=[models.Personnel(1, 'Eugene', '块长', '块长职责', '居委会', '第一块区（1-11、21、22）', '国和路888弄32号101室'),
-                                              models.Personnel(2, 'Ernest', '楼组长', '楼组长职责', '居委会', '第二块区（1-11、21、22）', '国和路888弄32号102室'),
-                                              models.Personnel(3, 'Young', '党总支书记', '党总支书记职责', '居委会', '第三块区（1-11、21、22）', '国和路888弄32号103室')])
-
-
-@app.delete('/admin/user/<userid>')
-def admin_user_delete(userid, db):
-    sql = 'delete from user where user_id = ' + userid
-    db.execute(sql)
-    return 'ok'
-
-
-@app.put('/admin/user/<userid>')
-def admin_user_update(userid, db):
-    password = bottle.request.forms.password
-    email = bottle.request.forms.email
-    name = bottle.request.forms.name
-    identity_number = bottle.request.forms.identity_number
-    card_id = bottle.request.forms.card_id
-    user_type_id = bottle.request.forms.user_type_id
-    # image = bottle.request.files.get('image')
-    # image.save('files')
-    vdbm = dbm.DbM(db)
-    vdbm.update(table='user', condition=' where user_id=' + userid, password=password, email=email,
-                name=name, identity_number=identity_number, card_id=card_id, user_type_id=user_type_id,
-                image='default.jpg')
-
-
-@app.put('/admin/user/role/<user_role_id>')
-def admin_user_role_update(user_role_id, db):
-    role_id = bottle.request.forms.role_id
-    role_description = bottle.request.forms.role_description
-    user_role_description = bottle.request.forms.user_role_description
-    description_detail = bottle.request.forms.description_detail
-    role_type_id = bottle.request.forms.role_type_id
-
-    vdbm = dbm.DbM(db)
-    vdbm.update(table='role', condition=' where role_id=' + role_id,  role_type_id=role_type_id, description=role_description)
-    vdbm.update(table='user_role', condition=' where user_role_id=' + user_role_id,  role_id=role_id,
-                description=user_role_description, description_detail=description_detail)
-
-@app.post('/admin/user/role')
-def admin_user_role_add(db):
-    vdbm = dbm.DbM(db)
-    utf_forms = bottle.request.forms.decode("utf-8")
-    vdbm.insert(table='user_role', **utf_forms)
-
-
-@app.put('/admin/user/livingcard/<livingcard_id>')
-def admin_user_livingcard_update(livingcard_id, db):
-    vdbm = dbm.DbM(db)
-    #数据库字段名参考：livingcard_id, name, address, zip_code, house_number, user_id
-    utf_forms = bottle.request.forms.decode("utf-8")
-    vdbm.update(table='livingcard', condition=' where livingcard_id=' + livingcard_id,
-                form_dict=utf_forms.dict)
-
-
-@app.post('/admin/user/livingcard')
-def admin_user_livingcard_add( db):
-    vdbm = dbm.DbM(db)
-    # 数据库字段名参考：livingcard_id, name, address, zip_code, house_number, user_id
-    utf_forms = bottle.request.forms.decode("utf-8")
-    vdbm.insert(table='livingcard', **utf_forms)
-
-
-@app.put('/admin/user/netcard/<netcard_id>')
-def admin_user_netcard_update(netcard_id, db):
-    vdbm = dbm.DbM(db)
-    #数据库字段名参考：netcard_id, nickname, image, commuity_user_id, user_id
-    utf_forms = bottle.request.forms.decode("utf-8")
-    vdbm.update(table='netcard', condition=' where netcard_id=' + netcard_id,  form_dict=utf_forms.dict)
-
-
-@app.post('/admin/user/netcard')
-def admin_user_netcard_add(db):
-    vdbm = dbm.DbM(db)
-    # 数据库字段名参考：netcard_id, nickname, image, commuity_user_id, user_id
-    utf_forms = bottle.request.forms.decode("utf-8")
-    vdbm.insert(table='netcard', **utf_forms)
-
-
-@app.put('/admin/user/partycard/<partycard_id>')
-def admin_user_partycard_update(partycard_id, db):
-     vdbm = dbm.DbM(db)
-     # 数据库字段名参考：partycard_id, relation, party_branch, position, type, status, join_date, confirm_date,
-     # inspection_person, application_id, user_id
-     utf_forms = bottle.request.forms.decode("utf-8")
-     vdbm.update(table='partycard', condition=' where partycard_id=' + partycard_id,
-                 form_dict=utf_forms.dict)
-
-
-@app.post('/admin/user/partycard')
-def admin_user_partycard_add(db):
-     vdbm = dbm.DbM(db)
-     # 数据库字段名参考：partycard_id, relation, party_branch, position, type, status, join_date, confirm_date,
-     # inspection_person, application_id, user_id
-     utf_forms = bottle.request.forms.decode("utf-8")
-     vdbm.insert(table='partycard',**utf_forms)
-
-
-@app.put('/admin/user/citizen/<citizen_id>')
-def admin_user_citizencard_update(citizen_id, db):
-    vdbm = dbm.DbM(db)
-    # 数据库字段名参考：citizen_id, name, identification_type, identification_value, marriage_status,
-    # employment_status, residence_category, resident_status, education_status, politics_status,
-    # migration_status, income_status, nation, gender, relationship, user_id, apartment_id,
-    # age, status, phone
-    utf_forms = bottle.request.forms.decode("utf-8")
-    vdbm.update(table='citizen_resident', condition=' where citizen_id=' + citizen_id,
-                form_dict=utf_forms.dict)
-
-
-@app.post('/admin/user/citizen')
-def admin_user_citizencard_add(db):
-    vdbm = dbm.DbM(db)
-    # 数据库字段名参考：citizen_id, name, identification_type, identification_value, marriage_status,
-    # employment_status, residence_category, resident_status, education_status, politics_status,
-    # migration_status, income_status, nation, gender, relationship, user_id, apartment_id,
-    # age, status, phone
-    utf_forms = bottle.request.forms.decode("utf-8")
-    vdbm.insert(table='citizen_resident', **utf_forms)
 
 def add_user(db):
     username = bottle.request.forms.username

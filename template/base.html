@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
@@ -16,6 +16,8 @@
 
 <body>
 <!-- NAVIGATION -->
+
+
 {% block navigation %}
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -27,16 +29,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/admin/index">{{ project_name|default('Community-DBM') }}</a>
+            <a class="navbar-brand" href="/test/list">{{ project_name|default('符合性测试系统') }}</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li><a href="/admin/index">{{ nav1|default('Dashboard') }}</a></li>
-                <li><a href="#">{{ nav2|default('Settings') }}</a></li>
-                <li><a href="#">{{ nav2|default('Profile') }}</a></li>
-                <li><a href="#">{{ nav3|default('Help') }}</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
+
     </div>
 </nav>
 {% endblock navigation %}
@@ -49,20 +44,12 @@
         {% block side_bar %}
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><h4 class="sub-header">Basic Data</h4></li>
-                <li class="active"><a href="/admin/user/list">Users<span class="sr-only">(current)</span></a></li>
-                <li><a href="/admin/personnel/list">Personnel</a></li>
-                <li><a href="/admin/apartment/list">Apartments</a></li>
+                <li id="upload" class="active"><a href="/test/upload">提交测试<span class="sr-only">(current)</span></a></li>
+                <li id="list" ><a href="/test/list">测试列表</a></li>
             </ul>
-            <ul class="nav nav-sidebar">
-                <li><h4 class="sub-header">Meta Data</h4></li>
-                <li><a href="#">Manage</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><h4 class="sub-header">DB Generator</h4></li>
-                <li><a href="#">Manage</a></li>
-            </ul>
+
         </div>
+
         {% endblock side_bar %}
 
         <!--CONTENT_CONTAINER-->
@@ -142,6 +129,8 @@
       border-radius: 50%;
     }
 </style>
+
+
 {% endblock extra_style %}
 </body>
 </html>

@@ -7,6 +7,10 @@
 <!-- EXTRAHEAD-->
 {% block extrahead %}
 <script>
+    $(document).ready(function(){
+        $('#upload').addClass('active')
+        $('#list').removeClass('active')
+    })
 function submitFiles() {
 var name=$('#inputUsername').val();
 $.ajax({
